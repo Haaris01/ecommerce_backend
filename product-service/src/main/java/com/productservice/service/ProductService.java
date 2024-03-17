@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,8 +26,9 @@ public class ProductService {
     public void createProduct(ProductRequest productRequest){
         Product product = Product.builder()
                 .name(productRequest.getName())
-                .description(productRequest.getDescription())
                 .price(productRequest.getPrice())
+                .quantity(productRequest.getQuantity())
+                .imageUrl(productRequest.getImageUrl())
                 .build();
 
         productRepository.save(product);
@@ -43,9 +45,31 @@ public class ProductService {
         return ProductResponse.builder()
                 .Id(product.getId())
                 .name(product.getName())
-                .description(product.getDescription())
                 .price(product.getPrice())
                 .build();
     }
 
+    public ProductResponse findProductByName(String name) {
+
+        Optional<Product> product = productRepository.findByName(name);
+        Product prod = product.isPresent() ? product.get() : null;
+        return ProductResponse.builder()
+                .Id(prod.getId())
+                .name(prod.getName())
+                .price(prod.getPrice())
+                .quantity(prod.getQuantity())
+                .imageUrl(prod.getImageUrl())
+                .build();
+    }
+
+    public void updateProduct(String name, ProductRequest productRequest) {
+        Optional<Product> product = productRepository.findByName(name);
+        Product existingProduct = product.get();
+        System.out.println(existingProduct);
+        existingProduct.setName(productRequest.getName());
+        existingProduct.setPrice(productRequest.getPrice());
+        existingProduct.setQuantity(productRequest.getQuantity());
+        existingProduct.setImageUrl(productRequest.getImageUrl());
+        productRepository.save(existingProduct);
+    }
 }

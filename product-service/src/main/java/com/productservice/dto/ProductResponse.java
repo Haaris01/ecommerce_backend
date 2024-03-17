@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ProductResponse {
     private String Id;
     private String name;
-    private String description;
+    private int quantity;
     private int price;
     private String imageUrl;
 }

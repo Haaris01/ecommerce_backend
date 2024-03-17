@@ -1,9 +1,7 @@
 package com.productservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.aot.generate.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -15,10 +13,17 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class Product {
+
     @Id
-    private String Id;
+    private String id;
     private String name;
-    private String description;
     private int price;
     private String imageUrl;
+    private int quantity;
+    private Ratings ratings;
+}
+
+class Ratings {
+    float stars;
+    int count;
 }

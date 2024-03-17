@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class ProductRequest {
+    private String Id;
     private String name;
-    private String description;
+    private int quantity;
     private int price;
     private String imageUrl;
 }
